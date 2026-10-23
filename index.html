@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f4f5fa">
+<title>AppNest — Apps & Downloads</title>
+<style>
+:root{--bg:#f4f5fa;--card:#fff;--ink:#171923;--muted:#9298a5;--green:#20c98b;--line:#e8eaf0;--shadow:0 5px 18px #20243a12}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink)}
+button,input{font:inherit}button{cursor:pointer}.wrap{max-width:1050px;margin:auto;padding:0 18px 100px}
+header{height:82px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);margin-bottom:24px}
+.brand{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:850;letter-spacing:-.5px}.brand-icon{width:45px;height:45px;border-radius:15px;background:linear-gradient(140deg,#16c98b,#64d8c5);display:grid;place-items:center;color:white;font-size:25px;box-shadow:0 5px 12px #20c98b30}
+.header-actions{display:flex;gap:9px}.round{border:0;background:#fff;border-radius:14px;width:48px;height:48px;font-size:22px;box-shadow:var(--shadow)}
+.search{position:relative;margin:0 0 30px}.search span{position:absolute;left:18px;top:13px;font-size:23px;color:#737b89}.search input{width:100%;height:58px;border:1px solid var(--line);background:white;border-radius:19px;padding:0 18px 0 54px;font-size:17px;outline:none;box-shadow:var(--shadow)}.search input:focus{border-color:#71d9b7}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin:28px 2px 16px}.section-head h2{font-size:23px;margin:0;letter-spacing:-.5px}.section-head h2 span{font-size:15px;font-weight:500;color:var(--muted);margin-left:5px}.see{border:0;background:transparent;color:var(--green);font-weight:750;font-size:15px}
+.popular{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.popular .app-card{display:flex;align-items:center;gap:14px;min-height:124px;padding:16px;position:relative}
+.app-card{background:var(--card);border:1px solid #eef0f4;border-radius:25px;box-shadow:var(--shadow);padding:17px 12px 15px;text-align:center;min-width:0;transition:transform .15s}.app-card:active{transform:scale(.985)}
+.app-icon{width:82px;height:82px;border-radius:23px;margin:0 auto 10px;display:grid;place-items:center;color:#fff;font-size:37px;font-weight:850;box-shadow:0 5px 14px #20243a18;flex-shrink:0}.popular .app-icon{margin:0;width:78px;height:78px}
+.app-info{min-width:0;flex:1;text-align:left}.app-name{font-size:16px;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:0 0 6px}.version{font-size:13px;color:var(--muted);margin:0 0 7px}.meta{font-size:12px;color:#a0a5af;display:flex;align-items:center;justify-content:center;gap:7px;white-space:nowrap}.popular .meta{justify-content:flex-start}.stars{color:#f3c51b;font-size:14px;letter-spacing:1px}.hot{position:absolute;right:12px;top:10px;background:#ff5571;color:white;border-radius:20px;padding:4px 10px;font-size:11px;font-weight:800}
+.apps-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.apps-grid .app-name{margin-bottom:5px}.empty{display:none;text-align:center;padding:35px;color:var(--muted)}
+.bottom-nav{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);width:min(94%,650px);padding:10px 12px;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;background:#ffffffed;backdrop-filter:blur(14px);border:1px solid #fff;border-radius:35px;box-shadow:0 8px 35px #20243a1d;z-index:5}.nav-item{border:0;background:transparent;color:#9ba1ad;padding:8px 4px;border-radius:25px;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:12px}.nav-item b{font-size:23px;font-weight:500}.nav-item.active{background:#d8f8eb;color:#20bd82;font-weight:800}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:30px 0 0}
+.dialog-backdrop{display:none;position:fixed;inset:0;background:#12142188;z-index:10;align-items:flex-end;justify-content:center;padding:16px}.dialog-backdrop.show{display:flex}.dialog{width:min(100%,480px);background:white;border-radius:26px;padding:24px;text-align:center;box-shadow:0 15px 50px #0003}.dialog .app-icon{width:90px;height:90px}.dialog h3{margin:6px 0}.dialog p{color:#727988;font-size:14px;line-height:1.6}.download-btn{display:block;background:#1fc88a;color:white;text-decoration:none;padding:14px;border-radius:14px;font-weight:800;margin-top:16px}.close-btn{border:0;background:#f1f3f7;border-radius:14px;padding:12px 18px;margin-top:10px;width:100%}
+@media(max-width:520px){.wrap{padding:0 15px 100px}header{height:75px}.brand{font-size:20px}.popular{grid-template-columns:1fr}.popular .app-card{min-height:110px}.popular .app-icon{width:70px;height:70px}.apps-grid{gap:11px}.apps-grid .app-card{padding:15px 7px;border-radius:22px}.apps-grid .app-icon{width:72px;height:72px;font-size:32px;border-radius:21px}.apps-grid .app-name{font-size:14px}.version{font-size:12px}.meta{gap:4px;font-size:11px}.section-head h2{font-size:21px}}
+@media(min-width:760px){.apps-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.popular{grid-template-columns:repeat(3,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="brand"><div class="brand-icon">A</div><span>AppNest</span></div>
+  <div class="header-actions"><button class="round" aria-label="Telegram" onclick="alert('এখানে তোমার Telegram চ্যানেলের লিংক বসাও।')">➤</button><button class="round" aria-label="Theme" onclick="toggleTheme()">☼</button></div>
+</header>
+<div class="search"><span>⌕</span><input id="search" type="search" placeholder="অ্যাপ খুঁজুন..." aria-label="অ্যাপ খুঁজুন"></div>
+
+<section id="popularSection">
+  <div class="section-head"><h2>☆ Popular Apps <span>(<span id="popularCount">4</span>)</span></h2><button class="see" onclick="document.querySelector('#allSection').scrollIntoView({behavior:'smooth'})">সব দেখুন ›</button></div>
+  <div class="popular" id="popular"></div>
+</section>
+<section id="allSection">
+  <div class="section-head"><h2>◷ All Apps <span>(<span id="allCount">8</span>)</span></h2></div>
+  <div class="apps-grid" id="apps"></div>
+  <div class="empty" id="empty">কোনো অ্যাপ পাওয়া যায়নি। অন্য নাম দিয়ে খুঁজুন।</div>
+</section>
+<footer>© <span id="year"></span> AppNest · App details are provided for information.</footer>
+</div>
+
+<nav class="bottom-nav" aria-label="Main navigation">
+  <button class="nav-item active" onclick="navTo('home',this)"><b>⌂</b>Home</button>
+  <button class="nav-item" onclick="navTo('allSection',this)"><b>▦</b>Apps</button>
+  <button class="nav-item" onclick="navTo('popularSection',this)"><b>↗</b>Trending</button>
+  <button class="nav-item" onclick="showProfile()"><b>♙</b>Profile</button>
+</nav>
+
+<div class="dialog-backdrop" id="backdrop" onclick="if(event.target===this)closeDialog()">
+ <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
+   <div id="dialogIcon" class="app-icon"></div><h3 id="dialogTitle"></h3><p id="dialogInfo"></p>
+   <a id="downloadLink" class="download-btn" href="#" target="_blank" rel="noopener">Download</a>
+   <button class="close-btn" onclick="closeDialog()">বন্ধ করুন</button>
+ </div>
+</div>
+<script>
+/* নতুন অ্যাপ যোগ করতে নিচের তালিকায় আরেকটি object কপি করে তথ্য বদলাও।
+   download: নিজের/অনুমোদিত APK বা অ্যাপের অফিসিয়াল ডাউনলোড URL বসাবে। */
+const appList = [
+ {name:"TikTok",version:"40.0.4",downloads:"67.9K",rating:4.4,icon:"♪",color:"linear-gradient(145deg,#111,#333)",popular:true,description:"ভিডিও তৈরি ও দেখার অ্যাপ।",download:"#"},
+ {name:"Bluetooth LE Tools",version:"1.3.56",downloads:"241.2K",rating:4.5,icon:"ᛒ",color:"linear-gradient(145deg,#2458ed,#6b8cff)",popular:true,description:"Bluetooth সম্পর্কিত টুলস।",download:"#"},
+ {name:"Time Cut",version:"2.6.0",downloads:"41.1K",rating:4.2,icon:"◷",color:"linear-gradient(145deg,#fff,#e9f5ff)",ink:"#34506a",popular:true,description:"ভিডিও এডিটিং টুল।",download:"#"},
+ {name:"InShot",version:"10.4",downloads:"2.5K",rating:4.3,icon:"▣",color:"linear-gradient(145deg,#ff2479,#ff764d)",popular:true,description:"ভিডিও ও ছবি সম্পাদনার অ্যাপ।",download:"#"},
+ {name:"ArabicWalls",version:"3.7.1",downloads:"10.3K",rating:4.2,icon:"▣",color:"linear-gradient(145deg,#21bcae,#66d9c9)",description:"ওয়ালপেপার অ্যাপ।",download:"#"},
+ {name:"Relens",version:"4.7.3",downloads:"68.4K",rating:4.1,icon:"◌",color:"linear-gradient(145deg,#fff,#f1f1f1)",ink:"#202020",description:"ক্যামেরা ও ফটো টুল।",download:"#"},
+ {name:"Photo Editor",version:"1.3.50",downloads:"8.2K",rating:4.0,icon:"✿",color:"linear-gradient(145deg,#ffc34c,#ff6d86)",description:"ছবি সম্পাদনার অ্যাপ।",download:"#"},
+ {name:"Music Player",version:"12.5.0",downloads:"21.7K",rating:4.3,icon:"♫",color:"linear-gradient(145deg,#9b4cf4,#d18bff)",description:"মিউজিক প্লেয়ার।",download:"#"}
+];
+const $ = id => document.getElementById(id);
+function stars(r){return "★".repeat(Math.floor(r))+"☆".repeat(5-Math.floor(r))}
+function card(app, featured=false){
+ const el=document.createElement("article");el.className="app-card";
+ const icon=document.createElement("div");icon.className="app-icon";icon.style.background=app.color;icon.style.color=app.ink||"#fff";icon.textContent=app.icon;
+ const info=document.createElement("div");info.className="app-info";
+ const name=document.createElement("p");name.className="app-name";name.textContent=app.name;
+ const ver=document.createElement("p");ver.className="version";ver.textContent="v"+app.version;
+ const meta=document.createElement("div");meta.className="meta";meta.innerHTML='<span>⇩ '+app.downloads+'</span><span class="stars">'+stars(app.rating)+'</span>';
+ if(featured){el.append(icon,info);info.append(name,ver,meta);if(app.name==="Bluetooth LE Tools"){const hot=document.createElement("span");hot.className="hot";hot.textContent="HOT 🔥";el.append(hot)}}else{el.append(icon,name,ver,meta)}
+ el.addEventListener("click",()=>openDialog(app));return el;
+}
+function render(query=""){
+ const q=query.trim().toLowerCase();const filtered=appList.filter(a=>a.name.toLowerCase().includes(q));
+ $("popular").innerHTML="";$("apps").innerHTML="";
+ filtered.filter(a=>a.popular).forEach(a=>$("popular").appendChild(card(a,true)));
+ filtered.forEach(a=>$("apps").appendChild(card(a)));
+ $("popularCount").textContent=filtered.filter(a=>a.popular).length;$("allCount").textContent=filtered.length;
+ $("popularSection").style.display=filtered.some(a=>a.popular)?"":"none";$("empty").style.display=filtered.length?"none":"block";
+}
+function openDialog(app){
+ $("dialogIcon").textContent=app.icon;$("dialogIcon").style.background=app.color;$("dialogIcon").style.color=app.ink||"#fff";
+ $("dialogTitle").textContent=app.name;$("dialogInfo").textContent="ভার্সন: "+app.version+" · রেটিং: "+app.rating+"/5. "+app.description;
+ const link=$("downloadLink");link.href=app.download;link.onclick=(e)=>{if(app.download==="#"||!app.download){e.preventDefault();alert("প্রথমে কোডের appList-এ এই অ্যাপের download লিংক বসাও।")}};
+ $("backdrop").classList.add("show");
+}
+function closeDialog(){$("backdrop").classList.remove("show")}
+$("search").addEventListener("input",e=>render(e.target.value));
+function navTo(id,btn){document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"));btn.classList.add("active");if(id==="home")window.scrollTo({top:0,behavior:"smooth"});else $(id).scrollIntoView({behavior:"smooth"})}
+function showProfile(){alert("এখানে পরে Profile বা About পেজ যোগ করা যাবে।")}
+function toggleTheme(){document.body.classList.toggle("dark");const dark=document.body.classList.contains("dark");document.documentElement.style.setProperty("--bg",dark?"#171923":"#f4f5fa");document.documentElement.style.setProperty("--card",dark?"#242735":"#fff");document.documentElement.style.setProperty("--ink",dark?"#f5f6fb":"#171923");document.documentElement.style.setProperty("--line",dark?"#363a49":"#e8eaf0")}
+$("year").textContent=new Date().getFullYear();render();
+</script>
+</body>
+</html>
